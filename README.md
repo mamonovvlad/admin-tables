@@ -1,26 +1,18 @@
-# Currency table
+<h1 style="margin-top: 10px" align="center" >Admin Tables</h1>
 
-## Project setup
-```
+## Build Setup:
+
+```bash
+# Install dependencies:
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# Start local server:
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+# Output will be at dist
 npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 
 ```
-
 ### Start server local
 ```
 npm install -g serve
@@ -28,6 +20,15 @@ npm install -g serve
 serve -s dist
 ```
 
-# admin-tables
-# admin-tables
-# admin-tables
+
+
+
+## Project Structure:
+```bash
+- src
+    - components
+    - store
+    - views
+    - App.vue
+    - main.js
+```
