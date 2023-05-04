@@ -39,7 +39,7 @@ export const useCurrenciesStore = defineStore('currencies', () => {
     }
   }
   function receivingUsers() {
-    let url = `${process.env.VUE_APP_KEY}/v1/admin?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
+    let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/admin?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
 
     axios.get(url, {
       method: "GET",
@@ -59,7 +59,7 @@ export const useCurrenciesStore = defineStore('currencies', () => {
 
   }
   function receivingTemplate(clearTemplate = false) {
-    let url = `${process.env.VUE_APP_KEY}/v1/course-template/list-templates?user_id=${userId.value}&access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
+    let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/course-template/list-templates?user_id=${userId.value}&access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
     axios.get(url, {
       method: "GET",
       headers: {
@@ -89,7 +89,7 @@ export const useCurrenciesStore = defineStore('currencies', () => {
     });
   }
   function receivingTable() {
-    let url = `${process.env.VUE_APP_KEY}/v1/course-template/templates?user_id=${userId.value}&id=${templateId.value}&access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
+    let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/course-template/templates?user_id=${userId.value}&id=${templateId.value}&access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
     axios.get(url)
       .then(res => {
         if (res.data !== undefined) {

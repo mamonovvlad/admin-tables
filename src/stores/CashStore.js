@@ -9,13 +9,14 @@ export const useCashStore = defineStore('cash', () => {
   const rowDataAll = reactive({});
   const updateTable = useUpdateTable();
   const receivingTable = () => {
-    let url = `${process.env.VUE_APP_KEY}/v1/course-city/all?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
+    let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/course-city/all?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`
     axios.get(url, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       }
     }).then(res => {
+      console.log(res)
       if (res.data !== undefined) {
         rowDataAll.value = res.data;
         rowData.value = rowDataAll.value.filter(item => [1].includes(item.is_primary) && [0].includes(item.is_archive));

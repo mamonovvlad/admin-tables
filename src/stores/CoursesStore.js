@@ -22,7 +22,7 @@ export const useCoursesStore =defineStore('courses',()=>{
     courseTron = ref();
 
   const gettingCourses = () => {
-    let url = `${process.env.VUE_APP_KEY}/v1/static-data?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`;
+    let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/static-data?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`;
     axios.get(url, {
       method: "GET",
       headers: {

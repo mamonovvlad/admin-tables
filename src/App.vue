@@ -1,12 +1,13 @@
 <script setup>
 import TheTables from "@/components/sections/TheTables.vue";
 import TheHeader from "@/components/sections/TheHeader.vue";
+
+console.log(process.env)
 </script>
 
 <template>
   <the-header></the-header>
   <the-tables></the-tables>
-
 </template>
 
 
