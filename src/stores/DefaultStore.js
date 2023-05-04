@@ -14,7 +14,7 @@ export const useDefaultStore = defineStore('default', () => {
   const cashStore = useCashStore();
   //store
   let courseSort = "course-template";
-  let isShowInformation = ref(null);
+  let isShowInformation = ref('0');
   let citySort = "course-city";
   let themeTable = ref('ag-theme-alpine');
   let zoomTable = ref('1');
