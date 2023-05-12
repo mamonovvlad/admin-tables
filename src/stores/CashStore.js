@@ -16,7 +16,6 @@ export const useCashStore = defineStore('cash', () => {
         'Content-Type': 'application/json;charset=utf-8'
       }
     }).then(res => {
-      console.log(res)
       if (res.data !== undefined) {
         rowDataAll.value = res.data;
         rowData.value = rowDataAll.value.filter(item => [1].includes(item.is_primary) && [0].includes(item.is_archive));

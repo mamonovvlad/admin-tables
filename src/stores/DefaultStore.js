@@ -14,7 +14,7 @@ export const useDefaultStore = defineStore('default', () => {
   const cashStore = useCashStore();
   //store
   let courseSort = "course-template";
-  let isShowInformation = ref('0');
+  let isShowInformation = ref(null);
   let citySort = "course-city";
   let themeTable = ref('ag-theme-alpine');
   let zoomTable = ref('1');
@@ -29,7 +29,10 @@ export const useDefaultStore = defineStore('default', () => {
     }
   }
   const tableDefinitions = () => {
-    if (localStorage.getItem('table-id') !== null) {
+    if (!localStorage.getItem('table-id')) {
+      isShowInformation.value = '0';
+      localStorage.setItem('table-id','0');
+    }else {
       isShowInformation.value = localStorage.getItem('table-id');
     }
   };
@@ -152,6 +155,9 @@ export const useDefaultStore = defineStore('default', () => {
       BALI: 'bali',
       NYC: 'nyc',
       LOSAN: 'losan',
+      MIAMI: 'miami',
+      MRBL: 'mrbl',
+      MLG: 'mlg',
     }
     const namesMap = {
       BNBBEP20: 'binance-coin',
@@ -286,7 +292,7 @@ export const useDefaultStore = defineStore('default', () => {
     function sendData() {
       let number = params.value;
       let data = JSON.stringify({
-        id: updatingCurrencies === false ? params.node.data.course.id : params.node.data.id,
+        id: updatingCurrencies === false ? params.node.data.id : params.node.data.course.id,
         field: params.column.colId,
         value: String(number)
       })

@@ -19,7 +19,9 @@ export const useCoursesStore =defineStore('courses',()=>{
     courseBnb = ref(),
     courseEth = ref(),
     courseDoge = ref(),
-    courseTron = ref();
+    courseTron = ref(),
+    courseCadUsd = ref(),
+    courseGbpUsd = ref();
 
   const gettingCourses = () => {
     let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/static-data?access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`;
@@ -75,6 +77,12 @@ export const useCoursesStore =defineStore('courses',()=>{
         } else if (value.name === 'bnb_course') {
           data = JSON.parse(value.value);
           courseBnb.value = Number(data.usd);
+        } else if (value.name === 'cad_usd_course') {
+          data = JSON.parse(value.value);
+          courseCadUsd.value = Number(data);
+        } else if (value.name === 'gbp_usd_course') {
+          data = JSON.parse(value.value);
+          courseGbpUsd.value = Number(data);
         }
       }
     });

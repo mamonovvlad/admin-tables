@@ -162,7 +162,6 @@ const columnDefs = reactive({
       }
     },
     {
-      sortIndex: 4,
       headerName: 'КУРС',
       width: 120,
       field: 'rate',
@@ -170,12 +169,23 @@ const columnDefs = reactive({
       cellClass: () => {
         return 'field-change';
       },
-      valueGetter: function (params) {
-        return defaultStore.getterCourse(params)
-      },
-      valueSetter: function (params) {
-        return defaultStore.saveCourse(params)
-      },
+      cellRenderer: (params) => {
+        if (params.data.is_set_exchange === '1' || params.data.is_set_exchange === 1) {
+          return params.data.min_course
+        } else if (params.data.is_set_max_exchange === '1' || params.data.is_set_max_exchange === 1) {
+          return params.data.max_course
+        } else {
+          if (params.data.rate === null && (params.data.is_rate === 0 || params.data.is_rate === '0')) {
+            if (params.node.data.course.sell >= 1 && params.node.data.course.sell <= 1) {
+              return params.node.data.course.buy.toFixed(5);
+            } else if (params.node.data.course.buy >= 1 && params.node.data.course.buy <= 1) {
+              return params.node.data.course.sell.toFixed(5);
+            }
+          } else {
+            return params.data.rate
+          }
+        }
+      }
     },
     {
       sortIndex: 5,

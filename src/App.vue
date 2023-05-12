@@ -1,8 +1,6 @@
 <script setup>
 import TheTables from "@/components/sections/TheTables.vue";
 import TheHeader from "@/components/sections/TheHeader.vue";
-
-console.log(process.env)
 </script>
 
 <template>
@@ -34,7 +32,6 @@ html {
 
 body {
   font-weight: 400;
-  font-size: 14px;
   margin: 0;
 }
 
@@ -91,6 +88,7 @@ body {
 }
 
 .table {
+  font-size: 13px !important;
   margin: 20px;
 
 
@@ -160,7 +158,6 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-
 
   & span {
     margin: 0 3px;

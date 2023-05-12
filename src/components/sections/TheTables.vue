@@ -6,6 +6,7 @@ import {useDefaultStore} from "@/stores/DefaultStore";
 
 const defaultStore = useDefaultStore();
 
+
 </script>
 
 <template>
