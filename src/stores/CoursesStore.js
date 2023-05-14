@@ -102,6 +102,8 @@ export const useCoursesStore =defineStore('courses',()=>{
     let uah;
     let eur;
     let kzt;
+    let gbp = 54;
+    let cad = 55;
 
     function identificationIdentifier(id, name) {
       id.forEach(currency => {
@@ -143,6 +145,15 @@ export const useCoursesStore =defineStore('courses',()=>{
     //eur
     if (eur === sellCurrency && usd === buyCurrency || usd === sellCurrency && eur === buyCurrency) {
       formulaDefault(courseEurUsd.value)
+    }
+    //gbp
+    if (gbp === sellCurrency && usd === buyCurrency || usd === sellCurrency && gbp === buyCurrency) {
+      formulaDefault(courseGbpUsd.value)
+    }
+    //cad
+    if (cad === sellCurrency && usd === buyCurrency || usd === sellCurrency && cad === buyCurrency) {
+      console.log(courseCadUsd.value)
+      formulaDefault(courseCadUsd.value)
     }
 
     let crypt = [
@@ -192,6 +203,12 @@ export const useCoursesStore =defineStore('courses',()=>{
             } else if ((curr === eur || curr === usd) && (item.name === 'btc' || item.name === 'eth')) {
               let res = (item.course / courseEurUsd.value);
               formulaDefault(res)
+            } else if (curr === gbp && (item.name === 'btc' || item.name === 'eth')) {
+              let res = (item.course / courseGbpUsd.value);
+              formulaDefault(res)
+            } else if (curr === cad && (item.name === 'btc' || item.name === 'eth')) {
+              let res = (item.course / courseCadUsd.value);
+              formulaDefault(res)
             } else {
               formulaDefault(item.course, course, val);
             }
@@ -206,6 +223,8 @@ export const useCoursesStore =defineStore('courses',()=>{
     definitionCurrencies(crypt, rub, courseUsdRub.value, 'crypt');
     definitionCurrencies(crypt, uah, courseUsdUah.value, 'crypt');
     definitionCurrencies(crypt, kzt, courseUsdKzt.value, 'crypt');
+    definitionCurrencies(crypt, cad, courseCadUsd.value, 'crypt');
+    definitionCurrencies(crypt, gbp, courseGbpUsd.value, 'crypt');
 
     function searchMatches(currency, name) {
       if (buyCurrency === currency || sellCurrency === currency) {
@@ -250,18 +269,24 @@ export const useCoursesStore =defineStore('courses',()=>{
       params.api.flashCells({rowNodes: [rowNode], columns: [`${params.colDef.field}`]});
     }
   }
+
+
   const updateMinMaxCourse = (params, rowNode, res, updatingCurrencies) => {
     if (updatingCurrencies === true) {
       if (params.data.course.min_course !== "1" && params.data.course.min_course !== 1) {
         rowNode.setDataValue('course.min_course', res);
+        params.api.flashCells({rowNodes: [rowNode], columns: [`course.min_course`]});
       } else if (params.data.course.max_course !== "1" && params.data.course.max_course !== 1) {
         rowNode.setDataValue('course.max_course', res);
+        params.api.flashCells({rowNodes: [rowNode], columns: [`course.max_course`]});
       }
     } else if (updatingCurrencies === false) {
-      if (params.data.min_course !== "1" && params.data.min_course !== 1) {
+      if (params.data.min_course !== "1" && params.data.min_course !== 1 && params.data.min_course !== null) {
         rowNode.setDataValue('min_course', res);
-      } else if (params.data.max_course !== "1" && params.data.max_course !== 1) {
+        params.api.flashCells({rowNodes: [rowNode], columns: [`min_course`]});
+      } else if (params.data.max_course !== "1" && params.data.max_course !== 1 && params.data.max_course !== null) {
         rowNode.setDataValue('max_course', res);
+        params.api.flashCells({rowNodes: [rowNode], columns: [`max_course`]});
       }
     }
   }

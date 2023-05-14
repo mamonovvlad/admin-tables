@@ -37,7 +37,7 @@ body {
 
 .table,
 body {
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 
@@ -90,6 +90,7 @@ body {
 .table {
   font-size: 13px !important;
   margin: 20px;
+  font-weight: 500;
 
 
   & .ag-root-wrapper-body.ag-layout-normal {

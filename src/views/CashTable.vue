@@ -342,6 +342,7 @@ const defaultColDef = {
 };
 onMounted(() => {
   document.title = 'Наличка';
+  coursesStore.gettingCourses();
   cashStore.receivingTable();
 });
 

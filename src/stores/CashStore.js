@@ -20,7 +20,6 @@ export const useCashStore = defineStore('cash', () => {
         rowDataAll.value = res.data;
         rowData.value = rowDataAll.value.filter(item => [1].includes(item.is_primary) && [0].includes(item.is_archive));
       }
-
     });
   }
   const instruments = (params) => {
