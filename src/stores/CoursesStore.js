@@ -243,7 +243,6 @@ export const useCoursesStore =defineStore('courses',()=>{
     }
 
     function formulaDefault(mainCourse, course, value) {
-      console.log(mainCourse, course, value)
       params.value = updatingCurrencies === true ? params.data.course.min_max_percent : params.data.min_max_percent;
       let res
       if (sing === '+') {
