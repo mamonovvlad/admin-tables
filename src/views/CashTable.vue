@@ -143,7 +143,7 @@ const columnDefs = reactive({
       field: 'title',
       sort: 'asc',
       cellRenderer: (params) => {
-        return defaultStore.windowOpen(params)
+        return defaultStore.windowOpen(params, true)
       }
     },
     {
