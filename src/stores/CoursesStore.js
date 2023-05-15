@@ -200,7 +200,7 @@ export const useCoursesStore =defineStore('courses',()=>{
             if (curr === usd && (item.name === 'doge' || item.name === 'tron')) {
               let res = (1 / item.course);
               formulaDefault(res)
-            } else if ((curr === eur || curr === usd) && (item.name === 'btc' || item.name === 'eth')) {
+            } else if (curr === eur && (item.name === 'btc' || item.name === 'eth')) {
               let res = (item.course / courseEurUsd.value);
               formulaDefault(res)
             } else if (curr === gbp && (item.name === 'btc' || item.name === 'eth')) {
@@ -212,11 +212,11 @@ export const useCoursesStore =defineStore('courses',()=>{
             } else {
               formulaDefault(item.course, course, val);
             }
+
           }
         }
       }
     }
-
     // crypto
     definitionCurrencies(crypt, eur);
     definitionCurrencies(crypt, usd);
@@ -243,6 +243,7 @@ export const useCoursesStore =defineStore('courses',()=>{
     }
 
     function formulaDefault(mainCourse, course, value) {
+      console.log(mainCourse, course, value)
       params.value = updatingCurrencies === true ? params.data.course.min_max_percent : params.data.min_max_percent;
       let res
       if (sing === '+') {
