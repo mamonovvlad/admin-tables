@@ -77,6 +77,7 @@ body {
     }
   }
 
+
   & .ag-row-even {
     background: var(--light-white);
   }
