@@ -128,7 +128,6 @@ const columnDefs = reactive({
       width: 86,
       rowDrag: true,
       field: 'buyCurrency.symbol',
-      sort: 'asc',
       cellClass: (params) => {
         return params.data.is_primary === 1 ? 'is-primary' : ''
       },
@@ -141,7 +140,6 @@ const columnDefs = reactive({
       headerName: 'НАЗВАНИЕ',
       minWidth: 60,
       field: 'title',
-      sort: 'asc',
       cellRenderer: (params) => {
         return defaultStore.windowOpen(params, true)
       }

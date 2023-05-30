@@ -174,6 +174,9 @@ export const useDefaultStore = defineStore('default', () => {
       UZHH: 'uzhh',
       CHERN: 'chern',
       IVFR: 'ivfr',
+      TLAV: 'tlav',
+      BHRT: 'bhrt',
+      LIMAS: 'limas',
     }
     const namesMap = {
       BNBBEP20: 'binance-coin',
