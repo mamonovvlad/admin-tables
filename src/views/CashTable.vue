@@ -59,12 +59,6 @@ const columnDefs = reactive({
       field: 'country.name_ru',
     },
     {
-      headerName: 'ID',
-      width: 60,
-      field: 'sort_order',
-
-    },
-    {
       headerName: 'ГОРОД',
       rowDrag: (params) => {
         if (params.node.data) {
