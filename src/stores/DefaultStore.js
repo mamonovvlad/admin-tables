@@ -230,16 +230,29 @@ export const useDefaultStore = defineStore('default', () => {
   const onRowDragEnd = (gridApi, number) => {
     let newArr = [];
     let count = gridApi.api.getDisplayedRowCount();
-    for (let i = 0; i < count; i++) {
+    if (number === 0) {
+      for (let i = 0; i < count; i++) {
+        let arr
+        let rowNode = gridApi.api.getDisplayedRowAtIndex(i);
+        rowNode.data.sort_order = rowNode.rowIndex;
+        arr = rowNode.data.id + ':' + rowNode.data.sort_order;
+        newArr.push(arr)
+      }
+    } else if (number === 1) {
       let arr
-      let rowNode = gridApi.api.getDisplayedRowAtIndex(i);
-      rowNode.data.sort_order = rowNode.rowIndex;
-      arr = rowNode.data.id + ':' + rowNode.data.sort_order;
-      newArr.push(arr)
+      let items = gridApi.node.parent.childrenAfterGroup;
+      for (let i = 0; i <items.length; i++) {
+        items[i].data.sort_order = items[i].rowIndex;
+        arr = items[i].data.id + ':' + items[i].data.sort_order;
+        newArr.push(arr)
+      }
     }
+
+
     let data = newArr.join(',')
     let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/${number === 1 ? citySort : courseSort}/set-sort-order-multiple-data?data=${data}&access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`;
     axios.get(url).then();
+    console.log(data)
   }
   const buttonsRenderer = (params, updatingCurrencies) => {
     const buttons = document.createElement("div");
@@ -275,6 +288,7 @@ export const useDefaultStore = defineStore('default', () => {
       item.addEventListener('click', debounce((e) => {
         if (localStorage.getItem('merge-percentage-exchange') === '1' && updatingCurrencies === false ) {
           cashStore.searchCurrencies(cashStore.rowData, params)
+          coursesStore.calculationsData(params, false, e.target.dataset.sign)
         } else {
           if (updatingCurrencies === true) {
             clearInterval(currenciesStore.timeout);
@@ -381,10 +395,8 @@ export const useDefaultStore = defineStore('default', () => {
       if (updatingCurrencies === true) {
         currenciesStore.startTimeout();
         updateTable.changeCourse(data);
-        console.log(data, 'changeCourse')
       } else if (updatingCurrencies === false) {
         updateTable.changeCourseCity(data);
-        console.log(data, 'changeCourseCity')
       } else {
         return false
       }

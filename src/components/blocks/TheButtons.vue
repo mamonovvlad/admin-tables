@@ -1,54 +1,37 @@
 <script setup>
 import {useDefaultStore} from "@/stores/DefaultStore";
 import {onMounted, ref} from "vue";
+
 const defaultStore = useDefaultStore();
 
 
-const inputMergeCash = ref('0');
-const inputMergePercentageExchange = ref('0');
+let inputMergeCash = ref('0');
+let inputMergePercentageExchange = ref('0');
+let inputMergeBtcEth = ref('0');
 
-const mergeCash = () => {
-  if (localStorage.getItem('merge-cash') !== null) {
-    if (localStorage.getItem('merge-cash') === '1') {
-      inputMergeCash.value = localStorage.getItem('merge-cash')
+const inputMerge = (name, variable) => {
+  if (localStorage.getItem(`${name}`) !== null) {
+    if (localStorage.getItem(`${name}`) === '1') {
+      variable.value = localStorage.getItem(`${name}`)
     } else {
-      inputMergeCash.value = localStorage.getItem('merge-cash')
-    }
-  }
-
-}
-const mergePercentageExchange = () => {
-  if (localStorage.getItem('merge-percentage-exchange') !== null) {
-    if (localStorage.getItem('merge-percentage-exchange') === '1') {
-      inputMergePercentageExchange.value = localStorage.getItem('merge-percentage-exchange')
-    } else {
-      inputMergePercentageExchange.value = localStorage.getItem('merge-percentage-exchange')
+      variable.value = localStorage.getItem(`${name}`)
     }
   }
 }
-const mergeFields = (field, name) => {
-  if (field === 'cash') {
-    if (inputMergeCash.value === '0') {
-      localStorage.setItem(name, '1');
-      inputMergeCash.value = '1'
-    } else {
-      inputMergeCash.value = '0'
-      localStorage.setItem(name, '0');
-    }
-  } else if (field === 'percentage-exchange') {
-    if (inputMergePercentageExchange.value === '0') {
-      localStorage.setItem(name, '1');
-      inputMergePercentageExchange.value = '1'
-    } else {
-      inputMergePercentageExchange.value = '0'
-      localStorage.setItem(name, '0');
-    }
+
+function mergeFields(variable, name) {
+  if (variable === '0') {
+    localStorage.setItem(name, '1');
+  } else {
+    localStorage.setItem(name, '0');
   }
 }
 
 onMounted(() => {
-  mergeCash();
-  mergePercentageExchange();
+
+  inputMerge('merge-cash', inputMergeCash);
+  inputMerge('merge-percentage-exchange', inputMergePercentageExchange);
+  inputMerge('merge-btc-eth', inputMergeBtcEth);
 })
 </script>
 
@@ -56,15 +39,29 @@ onMounted(() => {
   <div class="buttons">
     <template v-if="defaultStore.isShowInformation ==='1'">
       <label class="wrapper-label">
-        <input class="default-checkbox" type="checkbox" :checked="inputMergeCash==='1'" :value="inputMergeCash"
-               @change="mergeFields('cash','merge-cash')">
-        Объединить Tether
+        <input class="default-checkbox"
+               type="checkbox"
+               :checked="inputMergeCash==='1'"
+               :value="inputMergeCash"
+               @change="mergeFields(inputMergeCash,'merge-cash')">
+        {{ inputMergeCash.value }}
+        Объединить USD и EUR
       </label>
       <label class="wrapper-label">
-        <input class="default-checkbox" type="checkbox" :checked="inputMergePercentageExchange==='1'"
+        <input class="default-checkbox"
+               type="checkbox"
+               :checked="inputMergePercentageExchange==='1'"
                :value="inputMergePercentageExchange"
-               @change="mergeFields('percentage-exchange','merge-percentage-exchange')">
-        Объединить процент биржи
+               @change="mergeFields(inputMergePercentageExchange,'merge-percentage-exchange')">
+        Объединить процент биржи (USD и EUR)
+      </label>
+      <label class="wrapper-label">
+        <input class="default-checkbox"
+               type="checkbox"
+               :checked="inputMergeBtcEth==='1'"
+               :value="inputMergeBtcEth"
+               @change="mergeFields(inputMergeBtcEth,'merge-btc-eth')">
+        Объединить Bitcoin и Ethereum
       </label>
     </template>
   </div>
