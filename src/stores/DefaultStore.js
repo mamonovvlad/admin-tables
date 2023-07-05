@@ -85,10 +85,11 @@ export const useDefaultStore = defineStore('default', () => {
   }
   const windowOpen = (params, city = false) => {
     const links = document.createElement("div");
+
     links.className = 'name';
     links.innerHTML = `
-    <span> ${params.data.sellCurrency.name_ru} - ${params.data.buyCurrency.name_ru}</span>
-   ${city === false ? `
+
+   ${city === false ?  <span> ${params.data.sellCurrency.name_ru} - ${params.data.buyCurrency.name_ru}</span>`
         <a class='icon__table' href='https://dvigmakaki.xyz/course/view?id=${params.node.data.course.id}'  target='_blank'>
           <svg class="svg-inline--fa fa-eye" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               <path class="" fill="currentColor" d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
@@ -106,126 +107,16 @@ export const useDefaultStore = defineStore('default', () => {
         </a>`
     }
   `
-
     let link = links.querySelector('.open-window')
     link.addEventListener('click', () => {
-      let sellCurrency = link.getAttribute('data-sell')
-      let buyCurrency = link.getAttribute('data-buy')
-      let getCity = link.getAttribute('data-city')
-      openTab(sellCurrency, buyCurrency, getCity, city)
+      if (city === false) {
+        window.open("//bestchange.ru/" + params.data.sellCurrency.bestchange_code + '-to-' + params.data.buyCurrency.bestchange_code + ".html", 'example', 'width=1000,height=500');
+      } else {
+        window.open("//bestchange.ru/" + params.data.sellCurrency.bestchange_code + '-to-' + params.data.buyCurrency.bestchange_code + '-in-' + params.data.city.code.toLowerCase() + ".html", 'example', 'width=1000,height=500');
+      }
     });
 
     return links;
-  }
-  const openTab = (sellCurrency, buyCurrency, getCity, city) => {
-    const namesCity = {
-      KIEV: 'kiev',
-      VALEN: 'valen',
-      WARS: 'wars',
-      HMLN: 'hmln',
-      VINN: 'vinn',
-      ODS: 'ods',
-      SUMY: 'sumy',
-      HRK: 'hrk',
-      BTM: 'btm',
-      TBIL: 'tbil',
-      ERVN: 'ervn',
-      DUBAI: 'dubai',
-      TASHK: 'tashk',
-      STPNK: 'stpnk',
-      BER: 'ber',
-      LISB: 'lisb',
-      MON: 'mon',
-      NICE: 'nice',
-      STAM: 'stam',
-      ANTL: 'antl',
-      KISH: 'kish',
-      BARC: 'barc',
-      ALIC: 'alic',
-      BUD: 'bud',
-      WIEN: 'wien',
-      SFA: 'sfa',
-      VARN: 'varn',
-      CANN: 'cann',
-      MILAN: 'milan',
-      ROME: 'rome',
-      PRAG: 'prag',
-      FRAN: 'fran',
-      BRUS: 'brus',
-      BALI: 'bali',
-      NYC: 'nyc',
-      LOSAN: 'losan',
-      MIAMI: 'miami',
-      MRBL: 'mrbl',
-      MLG: 'mlg',
-      TRNT: 'trnt',
-      LNDN: 'lndn',
-      DUSS: 'duss',
-      RIGA: 'riga',
-      VILN: 'viln',
-      PHUK: 'phuk',
-      WRCL: 'wrcl',
-      KRKW: 'krkw',
-      DNPR: 'dnpr',
-      LVOV: 'lvov',
-      ZAP: 'zap',
-      KRVR: 'krvr',
-      MYKL: 'mykl',
-      UZHH: 'uzhh',
-      CHERN: 'chern',
-      IVFR: 'ivfr',
-      TLAV: 'tlav',
-      BHRT: 'bhrt',
-      LIMAS: 'limas',
-    }
-    const namesMap = {
-      BNBBEP20: 'binance-coin',
-      ETH: 'ethereum',
-      LTC: 'litecoin',
-      ZEC: 'zcash',
-      DASH: 'dash',
-      DOGE: 'dogecoin',
-      PRRUB: 'payeer-rub',
-      MONOBUAH: 'monobank',
-      RFBUAH: 'raiffeisen-bank-uah',
-      USBUAH: 'ukrsibbank',
-      OSDBUAH: 'oschadbank',
-      CASHUSD: 'dollar-cash',
-      CASHRUB: 'ruble-cash',
-      P24UAH: 'privat24-uah',
-      PMUSD: 'perfectmoney-usd',
-      PRUSD: 'payeer',
-      BTC: 'bitcoin',
-      XRP: 'ripple',
-      PMBBUAH: 'pumb',
-      YAMRUB: 'yandex-money',
-      OKUSD: 'okpay',
-      WEXEUSD: 'wex',
-      QWRUB: 'qiwi',
-      ADVCUSD: 'advanced-cash',
-      SBERRUB: 'sberbank',
-      TCSBRUB: 'tinkoff',
-      ACRUB: 'alfaclick',
-      TBRUB: 'telebank',
-      RUSSTRUB: 'russtandart',
-      CARDRUB: 'visa-mastercard-rub',
-      CARDUAH: 'visa-mastercard-uah',
-      TRX: 'tron',
-      CASHEUR: 'euro-cash',
-      USDTTRC20: 'tether-trc20',
-      USDTERC20: 'tether-erc20',
-      CARDKZT: 'visa-mastercard-kzt',
-      KSPBKZT: 'kaspi-bank',
-      CASHCAD: 'cash-cad',
-      CASHGBP: 'pound-cash',
-
-    };
-    if (city === false) {
-      window.open("//bestchange.ru/" + namesMap[sellCurrency] + '-to-' + namesMap[buyCurrency] + ".html", 'example', 'width=1000,height=500');
-    } else {
-      window.open("//bestchange.ru/" + namesMap[sellCurrency] + '-to-' + namesMap[buyCurrency] + '-in-' + namesCity[getCity] + ".html", 'example', 'width=1000,height=500');
-    }
-
   }
   const onRowDragEnd = (gridApi, number) => {
     let newArr = [];
@@ -240,6 +131,7 @@ export const useDefaultStore = defineStore('default', () => {
       }
     } else if (number === 1) {
       let arr
+      console.log(gridApi.node)
       let items = gridApi.node.parent.childrenAfterGroup;
       for (let i = 0; i <items.length; i++) {
         items[i].data.sort_order = items[i].rowIndex;
@@ -252,7 +144,6 @@ export const useDefaultStore = defineStore('default', () => {
     let data = newArr.join(',')
     let url = `${process.env.NODE_ENV === "development" ? process.env.VUE_APP_KEY_LOCAL : process.env.VUE_APP_KEY}/v1/${number === 1 ? citySort : courseSort}/set-sort-order-multiple-data?data=${data}&access-token=EFjko3OineBf8RQCth33wpC0dZqM4CyO&_format=json`;
     axios.get(url).then();
-    console.log(data)
   }
   const buttonsRenderer = (params, updatingCurrencies) => {
     const buttons = document.createElement("div");

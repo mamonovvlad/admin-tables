@@ -124,6 +124,14 @@ body {
   }
 }
 
+.ag-row-level-1 {
+  background-color: #ececec !important;
+}
+
+.ag-row-level-2 {
+  background-color: #e3e3e3 !important;
+}
+
 .default-checkbox {
   width: 18px;
   height: 18px;

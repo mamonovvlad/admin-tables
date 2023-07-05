@@ -59,12 +59,19 @@ const columnDefs = reactive({
       field: 'country.name_ru',
     },
     {
-      headerName: 'ГОРОД',
       rowDrag: (params) => {
         if (params.node.data) {
           return true
         }
       },
+      cellRenderer: (params) => {
+        if (params.node.data) {
+          return defaultStore.windowOpen(params,true)
+        }
+      }
+    },
+    {
+      headerName: 'ГОРОД',
       width: 100,
       field: 'city.name_ru',
     },
@@ -134,7 +141,6 @@ const columnDefs = reactive({
                   field: params.column.colId,
                   value: e.target.value
                 })
-                console.log(data)
                 updateTable.changeCourse(data)
               })
             } else {
@@ -277,11 +283,14 @@ const columnDefs = reactive({
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
   resizable: true,
-  sortable: true,
 };
 const autoGroupColumnDef = {
   minWidth: 300,
+  // rowDrag: (params) => {
+  //   return params.node
+  // },
 };
+
 
 onMounted(() => {
   document.title = 'Наличка';
@@ -290,14 +299,18 @@ onMounted(() => {
 });
 
 ////////////////
+
 function getRowId(params) {
-  return params.data.id;
+  if (params.data) {
+    return params.data.id;
+  }
 }
 
 function onRowDragMove(event) {
   let movingNode = event.node;
   let overNode = event.overNode;
   let rowNeedsToMove = movingNode !== overNode;
+
 
   if (rowNeedsToMove) {
     let movingData = movingNode.data;
@@ -336,8 +349,6 @@ function rowDragEnd(params) {
       :autoGroupColumnDef="autoGroupColumnDef"
       :rowData="cashStore.rowData.value"
       :rowHeight="41"
-
-
       :animateRows="true"
       :getRowId="getRowId"
       :defaultColDef="defaultColDef"
@@ -368,6 +379,4 @@ function rowDragEnd(params) {
     color: #000;
   }
 }
-
-
 </style>

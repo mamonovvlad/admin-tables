@@ -47,13 +47,19 @@ export const useCashStore = defineStore('cash', () => {
 
   const searchCurrencies = (res, par) => {
     updateMerge(par.data.id, par)
-    if (localStorage.getItem('merge-cash') === '1' || localStorage.getItem('merge-percentage-exchange') === '1') {
+    if (localStorage.getItem('merge-cash') === '1') {
       currencyComparison(res, par, 'CASHUSD', 'CASHEUR', 'USDTERC20', 'USDTTRC20')
     }
 
     if (localStorage.getItem('merge-btc-eth') === '1') {
       currencyComparison(res, par, 'CASHUSD', 'CASHEUR', 'BTC', 'ETH')
     }
+
+    if (localStorage.getItem('merge-percentage-exchange') === '1') {
+      currencyComparison(res, par, 'CASHUSD', 'CASHEUR', 'USDTERC20', 'USDTTRC20')
+      currencyComparison(res, par, 'CASHUSD', 'CASHEUR', 'BTC', 'ETH')
+    }
+
   }
   const currencyComparison = (res, par, buyCashCode, sellCashCode, buyCurrencyCode, sellCurrencyCode) => {
     for (let item of res.value) {
