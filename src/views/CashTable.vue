@@ -52,13 +52,48 @@ const columnDefs = reactive({
       field: 'title',
       rowGroup: true,
       hide: true,
+      comparator: (a, b) => {
+        const direction = [
+          'Tether TRC20 USDT - Наличные USD',
+          'Tether ERC20 USDT - Наличные USD',
+          'Bitcoin - Наличные USD',
+          'Ethereum - Наличные USD',
+          'Tether TRC20 USDT - Наличные EUR',
+          'Tether ERC20 USDT - Наличные EUR',
+          'Bitcoin - Наличные EUR',
+          'Ethereum - Наличные EUR',
+          'Наличные USD - Tether TRC20 USDT',
+          'Наличные USD - Tether ERC20 USDT',
+          'Наличные USD - Bitcoin',
+          'Наличные USD - Ethereum',
+          'Tether TRC20 USDT - Наличные CAD',
+          'Tether ERC20 USDT - Наличные CAD',
+          'Bitcoin - Наличные CAD',
+          'Ethereum - Наличные CAD',
+          'Tether TRC20 USDT - Наличные GBP',
+          'Tether ERC20 USDT - Наличные GBP',
+          'Bitcoin - Наличные GBP',
+          'Ethereum - Наличные GBP',
+          'Advanced Cash USD - Наличные USD',
+        ];
+        return direction.indexOf(a) - direction.indexOf(b);
+      }
     },
     {
+      field: 'country.name_ru',
       rowGroup: true,
       hide: true,
-      field: 'country.name_ru',
+      // comparator: (a, b) => {
+      //   const countries = [
+      //     'Грузия',
+      //     'Украина',
+      //   ];
+      //   // sorts 'months' in chronological order
+      //   return countries.indexOf(a) - countries.indexOf(b);
+      // }
     },
     {
+      headerName: 'ПЕРЕТЯГИВАНИЕ',
       rowDrag: (params) => {
         if (params.node.data) {
           return true
@@ -280,25 +315,30 @@ const columnDefs = reactive({
   ],
 });
 
-// DefaultColDef sets props common to all Columns
 const defaultColDef = {
   resizable: true,
-};
-const autoGroupColumnDef = {
-  minWidth: 300,
-  // rowDrag: (params) => {
-  //   return params.node
-  // },
+  sort: 'asc',
 };
 
+const autoGroupColumnDef = {
+  floatingFilter: true,
+  sortable: true,
+  minWidth: 300,
+
+  headerName:"Группы",
+  filter: 'agTextColumnFilter',
+  filterValueGetter: (params) => {
+    if (params.colDef.headerName === 'Группы') {
+      return params.data.title;
+    }
+  },
+};
 
 onMounted(() => {
   document.title = 'Наличка';
   coursesStore.gettingCourses();
   cashStore.receivingTable();
 });
-
-////////////////
 
 function getRowId(params) {
   if (params.data) {
@@ -310,23 +350,15 @@ function onRowDragMove(event) {
   let movingNode = event.node;
   let overNode = event.overNode;
   let rowNeedsToMove = movingNode !== overNode;
-
-
   if (rowNeedsToMove) {
     let movingData = movingNode.data;
     let overData = overNode.data;
-
-
     let fromIndex = cashStore.rowData.value.indexOf(movingData);
     let toIndex = cashStore.rowData.value.indexOf(overData);
-
-
     let store = cashStore.rowData.value.slice();
     moveInArray(store, fromIndex, toIndex);
-
     cashStore.rowData.value = store;
     event.api.setRowData(store);
-    // console.log(store)
     event.api.clearFocusedCell();
 
   }

@@ -131,7 +131,6 @@ export const useDefaultStore = defineStore('default', () => {
       }
     } else if (number === 1) {
       let arr
-      console.log(gridApi.node)
       let items = gridApi.node.parent.childrenAfterGroup;
       for (let i = 0; i <items.length; i++) {
         items[i].data.sort_order = items[i].rowIndex;
