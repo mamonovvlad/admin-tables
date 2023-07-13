@@ -109,6 +109,12 @@ const columnDefs = reactive({
       headerName: 'ГОРОД',
       width: 100,
       field: 'city.name_ru',
+      floatingFilter: true,
+      sortable: true,
+      filter: 'agTextColumnFilter',
+      filterValueGetter: (params) => {
+        return params.data.city.name_ru;
+      },
     },
     {
       headerName: 'АКТИВНОСТЬ',
@@ -324,12 +330,11 @@ const autoGroupColumnDef = {
   floatingFilter: true,
   sortable: true,
   minWidth: 300,
-
   headerName:"Группы",
   filter: 'agTextColumnFilter',
   filterValueGetter: (params) => {
     if (params.colDef.headerName === 'Группы') {
-      return params.data.title;
+      return params.data.country.name_ru;
     }
   },
 };
