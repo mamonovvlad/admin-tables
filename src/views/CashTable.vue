@@ -23,7 +23,7 @@ const onModelUpdated = (params) => {
 }
 const onGridReady = (params) => {
   cashStore.gridApi = params;
-  defaultStore.deleteColumn(params.columnApi.columnModel.columnDefs)
+  defaultStore.deleteColumn(params.columnApi.columnModel.columnDefs);
 };
 
 const onCellEditingStopped = (params) => {
@@ -44,6 +44,7 @@ const onCellEditingStopped = (params) => {
     }
   }
 }
+
 
 
 const columnDefs = reactive({
@@ -77,20 +78,15 @@ const columnDefs = reactive({
           'Advanced Cash USD - Наличные USD',
         ];
         return direction.indexOf(a) - direction.indexOf(b);
-      }
+      },
+      cellRenderer: (params) => {
+        return openGroup(params)
+      },
     },
     {
       field: 'country.name_ru',
       rowGroup: true,
       hide: true,
-      // comparator: (a, b) => {
-      //   const countries = [
-      //     'Грузия',
-      //     'Украина',
-      //   ];
-      //   // sorts 'months' in chronological order
-      //   return countries.indexOf(a) - countries.indexOf(b);
-      // }
     },
     {
       headerName: 'ПЕРЕТЯГИВАНИЕ',
@@ -321,6 +317,7 @@ const columnDefs = reactive({
   ],
 });
 
+
 const defaultColDef = {
   resizable: true,
   sort: 'asc',
@@ -378,6 +375,49 @@ function onRowDragMove(event) {
 function rowDragEnd(params) {
   defaultStore.onRowDragEnd(params, 1)
 }
+
+const openGroup = (params) => {
+  let buttons = document.createElement("span")
+  buttons.className = 'wrapper-group';
+
+  buttons.innerHTML = `${params.value}<button data-value="${params.value}" class="button-group">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="_x32_" viewBox="0 0 512 512" xml:space="preserve">
+          <path fill="#000000" d="M503.283,233.406c-8.198-11.548-21.106-18.678-35.108-19.704v-44.571c0.007-12.334-5.052-23.663-13.14-31.724   c-8.068-8.088-19.39-13.14-31.724-13.134H220.167c-2.495,0-4.916-0.951-6.755-2.681l0.013,0.021L177.73,88.139   c-8.321-7.794-19.287-12.136-30.684-12.136H88.698c-12.334-0.007-23.663,5.053-31.724,13.141   c-8.088,8.06-13.147,19.39-13.14,31.724v92.834c-14.002,1.026-26.911,8.156-35.109,19.711C2.981,241.509,0,251.094,0,260.768   c0,5.244,0.875,10.53,2.66,15.616l42.15,120.524c0.247,0.69,0.499,1.299,0.821,1.956c1.935,3.917,3.74,7.766,5.77,11.609   c3.07,5.695,6.584,11.78,12.943,17.14c3.158,2.632,7.035,4.888,11.253,6.317c4.225,1.443,8.676,2.072,13.1,2.066H423.31   c7.302,0.04,14.18-2.352,19.349-5.71c7.849-5.086,12.491-11.568,16.032-17.202c3.48-5.647,5.894-10.905,7.412-13.688   c0.486-0.916,0.746-1.511,1.087-2.488l42.157-120.531c1.778-5.08,2.653-10.365,2.653-15.609   C512,251.094,509.026,241.509,503.283,233.406z M433.168,213.497H78.838v-92.628c0.007-2.776,1.074-5.128,2.885-6.974   c1.846-1.812,4.198-2.878,6.974-2.885h58.348c2.509,0,4.908,0.951,6.748,2.667l35.69,33.468l0.013,0.02   c8.3,7.76,19.26,12.115,30.671,12.115H423.31c2.776,0.006,5.134,1.074,6.974,2.885c1.812,1.839,2.879,4.191,2.885,6.967V213.497z"/>
+    </svg>
+  </button>`;
+
+
+  let button = buttons.querySelector('.button-group')
+
+  button.addEventListener('click', () => {
+    params.api.forEachNode((node) => {
+      if (node.parent.key === button.getAttribute('data-value')) {
+        params.api.setRowNodeExpanded(node, true, true);
+      }
+    })
+  });
+
+  return buttons;
+
+}
+
+
+// function test(params, val) {
+//   let buttons = document.querySelectorAll('.button-group');
+//   buttons.forEach(el => {
+//     el.addEventListener('click', () => {
+//       // console.log(params)
+//       console.log(val)
+//       // if (+el.getAttribute('data-row-id') === +params.rowIndex) {
+//       params.api.forEachNode((node) => {
+//         if (node.parent.key === 'Bitcoin - Наличные GBP') {
+//           params.api.setRowNodeExpanded(node, true, true);
+//         }
+//       })
+//     })
+//   })
+// }
+
 </script>
 <template>
   <ag-grid-vue
@@ -414,6 +454,22 @@ function rowDragEnd(params) {
     display: flex;
     text-decoration: none;
     color: #000;
+  }
+}
+.wrapper-group{
+  display: flex;
+  align-items: center;
+}
+.button-group {
+  display: flex;
+  cursor: pointer;
+  margin-left: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  & svg {
+    width: 14px;
+    height: 14px;
   }
 }
 </style>
