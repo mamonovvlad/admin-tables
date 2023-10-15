@@ -75,6 +75,10 @@ const columnDefs = reactive({
           'Tether ERC20 USDT - Наличные GBP',
           'Bitcoin - Наличные GBP',
           'Ethereum - Наличные GBP',
+          'Tether TRC20 USDT - Наличные AED',
+          'Tether ERC20 USDT - Наличные AED',
+          'Bitcoin - Наличные AED',
+          'Ethereum - Наличные AED',
           'Advanced Cash USD - Наличные USD',
         ];
         return direction.indexOf(a) - direction.indexOf(b);
