@@ -85,9 +85,7 @@ export const useDefaultStore = defineStore('default', () => {
   }
   const windowOpen = (params, city = false) => {
     const links = document.createElement("div");
-
     links.className = 'name';
-    console.log(params.data)
     links.innerHTML = `
    ${city === false ? `<span> ${params.data.sellCurrency.name_ru} - ${params.data.buyCurrency.name_ru}</span>
         <a class='icon__table' href='https://dvigmakaki.xyz/course/view?id=${params.node.data.course.id}'  target='_blank'>
