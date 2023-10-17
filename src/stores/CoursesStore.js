@@ -21,6 +21,7 @@ export const useCoursesStore =defineStore('courses',()=>{
     courseDoge = ref(),
     courseTron = ref(),
     courseCadUsd = ref(),
+    courseAedUsd = ref(),
     courseGbpUsd = ref();
 
   const gettingCourses = () => {
@@ -33,7 +34,9 @@ export const useCoursesStore =defineStore('courses',()=>{
     }).then(res => {
       for (let value of res.data) {
         let data;
-        if (value.name === 'usd_uah_course') {
+        if (value.name === 'aed_usd_course') {
+          courseAedUsd.value = Number(value.value);
+        } else if (value.name === 'usd_uah_course') {
           courseUsdUah.value = Number(value.value);
         } else if (value.name === 'usd_rub_course') {
           courseUsdRub.value = Number(value.value);
@@ -87,7 +90,6 @@ export const useCoursesStore =defineStore('courses',()=>{
       }
     });
   }
-
   const calculationsData = (params, updatingCurrencies, sing = null) => {
     const usdId = [1, 2, 6, 7, 8, 12, 28, 29, 30, 42];
     const uahId = [3, 5, 26, 31, 35, 43, 44, 45];
@@ -104,6 +106,7 @@ export const useCoursesStore =defineStore('courses',()=>{
     let kzt;
     let gbp = 54;
     let cad = 55;
+    let aed = 56;
 
     function identificationIdentifier(id, name) {
       id.forEach(currency => {
@@ -152,8 +155,11 @@ export const useCoursesStore =defineStore('courses',()=>{
     }
     //cad
     if (cad === sellCurrency && usd === buyCurrency || usd === sellCurrency && cad === buyCurrency) {
-      console.log(courseCadUsd.value)
       formulaDefault(courseCadUsd.value)
+    }
+    //aed
+    if (aed === sellCurrency && usd === buyCurrency || usd === sellCurrency && aed === buyCurrency) {
+      formulaDefault(courseAedUsd.value)
     }
 
     let crypt = [
@@ -209,6 +215,9 @@ export const useCoursesStore =defineStore('courses',()=>{
             } else if (curr === cad && (item.name === 'btc' || item.name === 'eth')) {
               let res = (item.course / courseCadUsd.value);
               formulaDefault(res)
+            } else if (curr === aed && (item.name === 'btc' || item.name === 'eth')) {
+              let res = (item.course / courseAedUsd.value);
+              formulaDefault(res)
             } else {
               formulaDefault(item.course, course, val);
             }
@@ -224,6 +233,7 @@ export const useCoursesStore =defineStore('courses',()=>{
     definitionCurrencies(crypt, uah, courseUsdUah.value, 'crypt');
     definitionCurrencies(crypt, kzt, courseUsdKzt.value, 'crypt');
     definitionCurrencies(crypt, cad, courseCadUsd.value, 'crypt');
+    definitionCurrencies(crypt, aed, courseAedUsd.value, 'crypt');
     definitionCurrencies(crypt, gbp, courseGbpUsd.value, 'crypt');
 
     function searchMatches(currency, name) {

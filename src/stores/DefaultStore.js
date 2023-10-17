@@ -225,10 +225,8 @@ export const useDefaultStore = defineStore('default', () => {
       if (updatingCurrencies === true) {
         currenciesStore.startTimeout();
         updateTable.changeCourse(data);
-        console.log(data, 'changeCourse')
       } else if (updatingCurrencies === false) {
         updateTable.changeCourseCity(data);
-        console.log(data, 'changeCourseCity')
       } else {
         return false
       }
