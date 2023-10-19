@@ -37,10 +37,8 @@ const onCellEditingStopped = (params) => {
         field: params.colDef.field,
         value: params.value
       })
-      console.log(data)
       updateTable.changeCourseCity(data)
       params.api.flashCells({rowNodes: [rowNode], columns: [params.colDef.field]});
-
     }
   }
 }
@@ -404,23 +402,6 @@ const openGroup = (params) => {
   return buttons;
 
 }
-
-
-// function test(params, val) {
-//   let buttons = document.querySelectorAll('.button-group');
-//   buttons.forEach(el => {
-//     el.addEventListener('click', () => {
-//       // console.log(params)
-//       console.log(val)
-//       // if (+el.getAttribute('data-row-id') === +params.rowIndex) {
-//       params.api.forEachNode((node) => {
-//         if (node.parent.key === 'Bitcoin - Наличные GBP') {
-//           params.api.setRowNodeExpanded(node, true, true);
-//         }
-//       })
-//     })
-//   })
-// }
 
 </script>
 <template>

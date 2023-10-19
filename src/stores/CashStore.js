@@ -81,7 +81,6 @@ export const useCashStore = defineStore('cash', () => {
         field: 'rate',
         value: value.data.rate
       })
-      console.log(data)
       updateTable.changeCourseCity(data)
     } else if (localStorage.getItem('merge-percentage-exchange') === '1' && value.colDef.field === 'min_max_percent') {
       let data = JSON.stringify({
@@ -89,7 +88,6 @@ export const useCashStore = defineStore('cash', () => {
         field: 'min_max_percent',
         value: value.data.min_max_percent
       })
-      console.log(data)
       updateTable.changeCourseCity(data)
     } else if (localStorage.getItem('merge-btc-eth') === '1' && value.colDef.field === 'rate') {
       let data = JSON.stringify({
@@ -97,7 +95,6 @@ export const useCashStore = defineStore('cash', () => {
         field: 'rate',
         value: value.data.rate
       })
-      console.log(data)
       updateTable.changeCourseCity(data)
     } else {
       return false;
